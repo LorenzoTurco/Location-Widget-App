@@ -1,0 +1,13 @@
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: black;
+  color: white;
+  font-family: "internals", sans-serif;
+
+  .nav__higher-text {
+    text-decoration: underline;
+    text-decoration-color: white;
+  }
+}
