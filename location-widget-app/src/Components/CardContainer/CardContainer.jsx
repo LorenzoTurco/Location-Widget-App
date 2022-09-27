@@ -1,11 +1,11 @@
 import "./CardContainer.scss";
 import Card from "./../Card/Card";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import GameOverScreen from "../GameOverScreen/GameOverScreen";
+import { motion, AnimatePresence } from "framer-motion";
+import cities from "../../data/cities";
 
-//My location temperature (fixed) vs Location from List (changes)
-
-const CardContainer = () => {
+const CardContainer = ({ score, setScore }) => {
   //MY LOCATION WEATHER
   const [yourLocationWeather, setYourLocationWeather] = useState([
     {
@@ -16,15 +16,7 @@ const CardContainer = () => {
   ]);
 
   //CITY LIST
-  const [cityList, setCityList] = useState([
-    "London",
-    "Madrid",
-    "Lisbon",
-    "Rome",
-    "Sofia",
-    "Paris",
-    "Vienna",
-  ]);
+  const [cityList, setCityList] = useState([cities]);
 
   const [currentCity, setCurrentCity] = useState([
     {
@@ -35,7 +27,6 @@ const CardContainer = () => {
   ]);
 
   const [gameOver, setGameOver] = useState(false);
-  const [score, setScore] = useState(0);
 
   let latitude;
   let longitude;
@@ -142,38 +133,60 @@ const CardContainer = () => {
     return arr;
   };
 
+  const [showTemp, setShowTemp] = useState(false);
+
+  const revealTemp = (temperature, id) => {
+    setShowTemp(true);
+
+    setTimeout(() => {
+      setShowTemp(false);
+
+      checkIfCorrect(temperature, id);
+    }, 2000);
+  };
+
   return (
     <>
       {!gameOver ? (
         <>
-          <span>Score: </span>
-          {score}
+          <div>
+            <AnimatePresence>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="main-screen"
+              >
+                <Card
+                  id={1}
+                  country={yourLocationWeather.country}
+                  region={yourLocationWeather.region}
+                  temperature={yourLocationWeather.temperature}
+                  clickHandler={revealTemp}
+                  showTemp={true}
+                ></Card>
 
-          <div className="container">
-            <Card
-              id={1}
-              country={yourLocationWeather.country}
-              region={yourLocationWeather.region}
-              temperature={yourLocationWeather.temperature}
-              clickHandler={checkIfCorrect}
-            ></Card>
-
-            <Card
-              id={2}
-              country={currentCity.country}
-              region={currentCity.region}
-              temperature={currentCity.temperature}
-              clickHandler={checkIfCorrect}
-            ></Card>
+                <Card
+                  id={2}
+                  country={currentCity.country}
+                  region={currentCity.region}
+                  temperature={currentCity.temperature}
+                  clickHandler={revealTemp}
+                  showTemp={showTemp}
+                ></Card>
+              </motion.div>
+            </AnimatePresence>
           </div>
         </>
       ) : (
-        <>
+        <div className="gameover-screen">
           <GameOverScreen
             score={score}
             resetGameFunction={resetGame}
+            gameOver={gameOver}
+            resetGame={resetGame}
           ></GameOverScreen>
-        </>
+        </div>
       )}
     </>
   );
