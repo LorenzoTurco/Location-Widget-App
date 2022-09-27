@@ -1,19 +1,24 @@
 import "./GameOverScreen.scss";
 
-const GameOverScreen = ({ score, resetGameFunction }) => {
+const GameOverScreen = ({ score, resetGameFunction, gameOver, resetGame }) => {
   return (
-    <div className="gameover-screen">
-      <h1>You Lost</h1>
-      <h2>Total score: {score}</h2>
+    <>
+      {gameOver ? (
+        <div className="modal">
+          <h3 className="modal__score">
+            Your final score is: <big>{score}</big>
+          </h3>
+          <p className="modal__tip">
+            <big>Tip:</big> Remember that different places have different
+            timezones.
+          </p>
 
-      <button
-        onClick={resetGameFunction}
-        type="button"
-        className="gameover-screen__button"
-      >
-        Try Again
-      </button>
-    </div>
+          <button className="modal__button" onClick={resetGame} type="button">
+            Play Again
+          </button>
+        </div>
+      ) : null}
+    </>
   );
 };
 
