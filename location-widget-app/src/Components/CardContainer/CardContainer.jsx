@@ -1,6 +1,6 @@
 import "./CardContainer.scss";
 import Card from "./../Card/Card";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import GameOverScreen from "../GameOverScreen/GameOverScreen";
 import { motion, AnimatePresence } from "framer-motion";
 import cities from "../../data/cities";
@@ -16,7 +16,7 @@ const CardContainer = ({ score, setScore }) => {
   ]);
 
   //CITY LIST
-  const [cityList, setCityList] = useState([cities]);
+  const [cityList, setCityList] = useState(cities);
 
   const [currentCity, setCurrentCity] = useState([
     {
@@ -27,6 +27,7 @@ const CardContainer = ({ score, setScore }) => {
   ]);
 
   const [gameOver, setGameOver] = useState(false);
+  const [showTemp, setShowTemp] = useState(false);
 
   let latitude;
   let longitude;
@@ -108,15 +109,7 @@ const CardContainer = ({ score, setScore }) => {
 
   const resetGame = () => {
     setGameOver(false);
-    let newCityList = [
-      "London",
-      "Madrid",
-      "Lisbon",
-      "Rome",
-      "Sofia",
-      "Paris",
-      "Vienna",
-    ];
+    let newCityList = cities;
     newCityList = shuffle(newCityList);
     setCityList(newCityList);
     setScore(0);
@@ -132,8 +125,6 @@ const CardContainer = ({ score, setScore }) => {
     }
     return arr;
   };
-
-  const [showTemp, setShowTemp] = useState(false);
 
   const revealTemp = (temperature, id) => {
     setShowTemp(true);

@@ -1,5 +1,4 @@
 import "./Card.scss";
-import { useState } from "react";
 
 const Card = ({ id, clickHandler, country, region, temperature, showTemp }) => {
   const getRandomColor = () => {
