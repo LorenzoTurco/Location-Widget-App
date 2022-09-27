@@ -1,11 +1,48 @@
+@keyframes toggleIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 .card {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
+  animation: toggleIn 0.5s 1;
+  text-align: center;
+  gap: 1rem;
+  padding-top: 3rem;
+  font-family: "Inter", sans-serif;
+
+  .card__country {
+    @media (max-width: 420px) {
+      font-size: 1.5rem;
+    }
+    font-size: 3rem;
+  }
+
+  .card__region {
+    @media (max-width: 420px) {
+      font-size: 1rem;
+    }
+    font-size: 1.5rem;
+  }
+
+  .card__temperature {
+    @media (max-width: 420px) {
+      font-size: 3rem;
+    }
+    margin-top: 4rem;
+    font-size: 5rem;
+  }
 }
 
 .card:hover {
-  background-color: yellow;
   cursor: pointer;
+  box-shadow: 10px 10px 10px 10px;
+  background: linear-gradient(rgb(0 0 0/20%) 0 0);
 }
