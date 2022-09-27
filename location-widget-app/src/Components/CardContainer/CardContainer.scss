@@ -1,5 +1,13 @@
-.container {
+.main-screen {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   justify-items: center;
+  height: 100vh;
+}
+
+.gameover-screen {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  margin-top: 10rem;
 }
