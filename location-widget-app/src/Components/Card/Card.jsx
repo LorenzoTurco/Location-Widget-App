@@ -1,21 +1,30 @@
 import "./Card.scss";
+import { useState } from "react";
 
-const Card = ({ id, clickHandler, country, region, temperature }) => {
+const Card = ({ id, clickHandler, country, region, temperature, showTemp }) => {
   const getRandomColor = () => {
-    const colorArr = ["#FF595E", "#FFCA3A", "#8AC926", "#1982C4v", "#6A4C93"];
+    const colorArr = ["#FFC09F", "#FFEE93", "#FCF5C7", "#ADF7B6"];
 
     return colorArr[Math.floor(Math.random() * colorArr.length)];
   };
 
+  //by having key={region} we ensure that the DOM element remounts everytime the region change (after every click).
+  //This ensures the animation runs each time the user clicks on an option and a new option is displayed.
   return (
     <div
       className="card"
-      style={{ backgroundColor: getRandomColor() }}
+      key={region}
+      style={
+        id == 2
+          ? { backgroundColor: getRandomColor() }
+          : { backgroundColor: "#79ADDC" }
+      }
       onClick={() => clickHandler(temperature, id)}
     >
-      <h1>{country}</h1>
-      <h2>{region}</h2>
-      <h3>{temperature}</h3>
+      <h1 class="card__country">{country}</h1>
+      <h3 class="card__region">{region}</h3>
+
+      {showTemp && <h1 class="card__temperature">{temperature}°C </h1>}
     </div>
   );
 };
