@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/%7BLocation-Widget-App%7D/static/css/main.0588eb1e.css",
+    "main.js": "/%7BLocation-Widget-App%7D/static/js/main.038204fe.js",
+    "static/js/787.71e412c6.chunk.js": "/%7BLocation-Widget-App%7D/static/js/787.71e412c6.chunk.js",
+    "index.html": "/%7BLocation-Widget-App%7D/index.html",
+    "main.0588eb1e.css.map": "/%7BLocation-Widget-App%7D/static/css/main.0588eb1e.css.map",
+    "main.038204fe.js.map": "/%7BLocation-Widget-App%7D/static/js/main.038204fe.js.map",
+    "787.71e412c6.chunk.js.map": "/%7BLocation-Widget-App%7D/static/js/787.71e412c6.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.0588eb1e.css",
+    "static/js/main.038204fe.js"
+  ]
+}
