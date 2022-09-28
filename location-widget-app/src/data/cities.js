@@ -26,7 +26,6 @@ const cities = [
   "Florence",
   "Istanbul",
   "Bucharest",
-  "Kyiv",
   "Warsaw",
   "Belgrade",
   "Kharkiv",
