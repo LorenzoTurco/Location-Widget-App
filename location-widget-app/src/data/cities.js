@@ -20,6 +20,19 @@ const cities = [
   "Luxemburg",
   "Podgorica",
   "Riga",
+  "Bratislava",
+  "Prague",
+  "Seville",
+  "Florence",
+  "Istanbul",
+  "Bucharest",
+  "Kyiv",
+  "Warsaw",
+  "Belgrade",
+  "Kharkiv",
+  "Tbilisi",
+  "Cologne",
+  "Birmingham",
 ];
 
 export default cities;
