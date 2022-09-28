@@ -4,83 +4,35 @@ import { useState, useEffect } from "react";
 import GameOverScreen from "../GameOverScreen/GameOverScreen";
 import { motion, AnimatePresence } from "framer-motion";
 import cities from "../../data/cities";
+import { getCityWeather, getYourLocationWeather } from "../../api/api";
 
 const CardContainer = ({ score, setScore }) => {
-  //MY LOCATION WEATHER
   const [yourLocationWeather, setYourLocationWeather] = useState([
     {
-      country: 0,
-      region: 0,
-      temperature: 0,
+      country: null,
+      region: null,
+      temperature: null,
     },
   ]);
 
-  //CITY LIST
   const [cityList, setCityList] = useState(cities);
-
   const [currentCity, setCurrentCity] = useState([
     {
-      country: 0,
-      region: 0,
-      temperature: 0,
+      country: null,
+      region: null,
+      temperature: null,
     },
   ]);
 
   const [gameOver, setGameOver] = useState(false);
   const [showTemp, setShowTemp] = useState(false);
 
-  let latitude;
-  let longitude;
-
-  navigator.geolocation.getCurrentPosition((position) => {
-    longitude = position.coords.longitude;
-    latitude = position.coords.latitude;
-  });
-
-  const getYourLocationWeather = async () => {
-    try {
-      const response = await fetch(
-        `http://api.weatherapi.com/v1/current.json?key=${process.env.REACT_APP_API_KEY}&q=${latitude},${longitude}`
-      );
-      const data = await response.json();
-      console.log(data);
-      const temperature = data.current.temp_c;
-      const country = data.location.country;
-      const region = data.location.region;
-
-      setYourLocationWeather({
-        country: country,
-        region: region,
-        temperature: temperature,
-      });
-    } catch (e) {
-      console.log(e.message);
-    }
-  };
-
-  const getCityWeather = async (city) => {
-    try {
-      const response = await fetch(
-        `http://api.weatherapi.com/v1/current.json?key=${process.env.REACT_APP_API_KEY}&q=${city}`
-      );
-      const data = await response.json();
-      const temperature = data.current.temp_c;
-      const country = data.location.country;
-      const region = data.location.region;
-
-      setCurrentCity({
-        country: country,
-        region: region,
-        temperature: temperature,
-      });
-    } catch (e) {
-      console.log(e.message);
-    }
-  };
-
   useEffect(() => {
-    getYourLocationWeather();
-    getCityWeather(cityList[cityList.length - 1]);
+    getYourLocationWeather().then((res) => setYourLocationWeather(res));
+
+    getCityWeather(cityList[cityList.length - 1]).then((result) =>
+      setCurrentCity(result)
+    );
   }, []);
 
   const checkIfCorrect = (temperatureOfCityGuessed, id) => {
@@ -103,8 +55,12 @@ const CardContainer = ({ score, setScore }) => {
 
   const nextCard = () => {
     setScore(score + 1);
-    cityList.pop();
-    getCityWeather(cityList[cityList.length - 1]);
+    cityList.pop(); //remove city guessed
+    getCityWeather(cityList[cityList.length - 1]).then(
+      (
+        res //get new city to display
+      ) => setCurrentCity(res)
+    );
   };
 
   const resetGame = () => {
@@ -127,6 +83,7 @@ const CardContainer = ({ score, setScore }) => {
   };
 
   const revealTemp = (temperature, id) => {
+    //show temperature of city guessed for 2 seconds before moving on to the next card
     setShowTemp(true);
 
     setTimeout(() => {
